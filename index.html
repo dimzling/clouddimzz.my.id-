@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimz Fullstack developer - Website Hosting</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<style>
+  /* Import font */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #0f172a;
+    color: #f8fafc;
+    display: flex;
+    justify-content: center;
+}
+
+/* Background pattern */
+.background-pattern {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, #1e293b, transparent 40%),
+                radial-gradient(circle at 80% 80%, #1e293b, transparent 40%);
+    z-index: -1;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 960px;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #334155;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 32px;
+    color: #38bdf8;
+}
+
+.logo-text h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #38bdf8;
+}
+
+.logo-text .tagline {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+/* Creator badge */
+.creator-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.creator-badge a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #38bdf8;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.creator-badge a:hover {
+    text-decoration: underline;
+}
+
+/* Deploy Section */
+.section-header h2 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.deploy-card {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #f8fafc;
+}
+
+.subdomain-input {
+    display: flex;
+    align-items: center;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.subdomain-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    background: transparent;
+    color: #f8fafc;
+    font-size: 16px;
+}
+
+.domain-suffix {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.input-hint {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+/* File upload */
+.file-upload-area {
+    border: 2px dashed #475569;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: border 0.3s;
+}
+
+.file-upload-area:hover {
+    border-color: #38bdf8;
+}
+
+.upload-icon {
+    font-size: 40px;
+    color: #38bdf8;
+}
+
+.upload-text h3 {
+    margin: 10px 0 4px;
+}
+
+.browse-button {
+    margin-top: 12px;
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.browse-button:hover {
+    background: #0ea5e9;
+}
+
+.file-types {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+/* File preview */
+.file-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.file-icon {
+    color: #38bdf8;
+    font-size: 20px;
+}
+
+.remove-file-btn {
+    background: none;
+    border: none;
+    color: #f87171;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Deploy button */
+.deploy-button {
+    width: 100%;
+    background: #38bdf8;
+    color: #0f172a;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.deploy-button:disabled {
+    background: #334155;
+    cursor: not-allowed;
+}
+
+/* Loading */
+.loading-card {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #334155;
+    border-top: 4px solid #38bdf8;
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.progress-container {
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #334155;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #38bdf8;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Result */
+.result-card {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+}
+
+.result-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+    color: #38bdf8;
+}
+
+.result-content h3 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.url-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+.url-container input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #f8fafc;
+    font-size: 14px;
+}
+
+.url-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.action-btn {
+    background: #38bdf8;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background: #0ea5e9;
+}
+
+.qr-code {
+    margin: 10px auto;
+}
+
+/* Footer */
+.footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #94a3b8;
+}
+</style>
+<body>
+    <div class="background-pattern"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Clouddimz</h1>
+                    <span class="tagline">Lightning-fast website deployment</span>
+                </div>
+            </div>
+            
+            <div class="creator-badge">
+                <span class="created-by">Created by <strong>Xvoid</strong></span>
+                <a href="https://t.me/dimasganteng999" target="_blank" class="telegram-link">
+                    <i class="fab fa-telegram"></i>
+                    <span>@dimasganteng999</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Deploy Form -->
+            <div class="deploy-section" id="deployForm">
+                <div class="section-header">
+                    <h2>Deploy Your Website</h2>
+                    <p>Upload your files and get your website live in seconds</p>
+                </div>
+
+                <div class="deploy-card">
+                    <div class="form-group">
+                        <label for="subdomain" class="form-label">
+                            <i class="fas fa-globe"></i>
+                            <span>Choose Your Domain</span>
+                        </label>
+                        <div class="subdomain-input">
+                            <input 
+                                type="text" 
+                                id="subdomain" 
+                                placeholder="my-awesome-site"
+                                maxlength="64"
+                                pattern="[a-z0-9-]{3,64}"
+                            >
+                            <span class="domain-suffix">.dimz.my.id</span>
+                        </div>
+                        <div class="input-hint">
+                            <i class="fas fa-info-circle"></i>
+                            <span>3-64 characters, lowercase letters, numbers, and dashes only</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Upload Your Files</span>
+                        </label>
+                        
+                        <input type="file" id="fileInput" accept=".html,.zip" hidden>
+                        
+                        <div class="file-upload-area" id="fileDropZone">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">
+                                <h3>Drag & drop your files here</h3>
+                                <p>or click to browse</p>
+                            </div>
+                            <button type="button" class="browse-button" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-folder-open"></i>
+                                <span>Browse Files</span>
+                            </button>
+                            <div class="file-types">
+                                <span class="file-type">HTML</span>
+                                <span class="file-type">ZIP</span>
+                                <span class="size-limit">Max 10MB</span>
+                            </div>
+                        </div>
+
+                        <div class="file-preview" id="fileInfo" style="display: none;">
+                            <div class="file-icon">
+                                <i class="fas fa-file-code"></i>
+                            </div>
+                            <div class="file-details">
+                                <div class="file-name" id="fileName"></div>
+                                <div class="file-size" id="fileSize"></div>
+                            </div>
+                            <button type="button" class="remove-file-btn" onclick="removeFile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="deploy-button" id="deployBtn" disabled>
+                        <div class="button-content">
+                            <i class="fas fa-rocket"></i>
+                            <span>Deploy Website</span>
+                        </div>
+                        <div class="button-shine"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Screen -->
+            <div class="loading-section" id="loadingScreen" style="display: none;">
+                <div class="loading-card">
+                    <div class="loading-animation">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="loading-content">
+                        <h3 id="loadingTitle">Preparing deployment...</h3>
+                        <p id="loadingMessage">Please wait while we process your request</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span id="progressPercent">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="result-section" id="resultScreen" style="display: none;">
+                <div class="result-card">
+                    <div class="result-icon">
+                        <div class="success-icon" id="successIcon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="error-icon" id="errorIcon" style="display: none;">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="result-content">
+                        <h3 id="resultTitle">Deployment Successful!</h3>
+                        <p id="resultMessage">Your website is now live and accessible worldwide</p>
+                    </div>
+                    
+                    <div class="website-details" id="websiteInfo">
+                        <div class="url-section">
+                            <label class="detail-label">Your Website URL</label>
+                            <div class="url-container">
+                                <input type="text" id="websiteUrl" readonly>
+                                <div class="url-actions">
+                                    <button onclick="copyUrl()" class="action-btn copy-btn" title="Copy URL">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <a id="visitLink" href="#" target="_blank" class="action-btn visit-btn" title="Visit Website">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-section" id="qrContainer">
+                            <label class="detail-label">QR Code</label>
+                            <div class="qr-code-container">
+                                <div class="qr-code" id="qrCode"></div>
+                                <p class="qr-description">Scan to visit your website</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-actions">
+                        <button onclick="resetForm()" class="secondary-btn">
+                            <i class="fas fa-plus"></i>
+                            <span>Deploy Another</span>
+                        </button>
+                        <button onclick="shareWebsite()" class="primary-btn">
+                            <i class="fas fa-share-alt"></i>
+                            <span>Share Website</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 SpeedCloud. Love you.</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="https://t.me/Xvoid10" class="footer-link">Support</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    <script src="src/js/script.js"></script>
+  <script>
+    const subdomainInput = document.getElementById("subdomain");
+const fileInput = document.getElementById("fileInput");
+const fileDropZone = document.getElementById("fileDropZone");
+const fileInfo = document.getElementById("fileInfo");
+const fileName = document.getElementById("fileName");
+const fileSize = document.getElementById("fileSize");
+const deployBtn = document.getElementById("deployBtn");
+
+const deployForm = document.getElementById("deployForm");
+const loadingScreen = document.getElementById("loadingScreen");
+const resultScreen = document.getElementById("resultScreen");
+
+const progressFill = document.getElementById("progressFill");
+const progressPercent = document.getElementById("progressPercent");
+
+const websiteUrl = document.getElementById("websiteUrl");
+const visitLink = document.getElementById("visitLink");
+
+// Validate form
+function validateForm() {
+    const subdomainValid = /^[a-z0-9-]{3,64}$/.test(subdomainInput.value);
+    const fileSelected = fileInput.files.length > 0;
+    deployBtn.disabled = !(subdomainValid && fileSelected);
+}
+
+subdomainInput.addEventListener("input", validateForm);
+fileInput.addEventListener("change", handleFile);
+
+// File handler
+function handleFile() {
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        fileName.textContent = file.name;
+        fileSize.textContent = (file.size / 1024).toFixed(2) + " KB";
+        fileInfo.style.display = "flex";
+    } else {
+        fileInfo.style.display = "none";
+    }
+    validateForm();
+}
+
+function removeFile() {
+    fileInput.value = "";
+    fileInfo.style.display = "none";
+    validateForm();
+}
+
+// Drag & drop
+fileDropZone.addEventListener("click", () => fileInput.click());
+
+fileDropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    fileDropZone.style.borderColor = "#38bdf8";
+});
+
+fileDropZone.addEventListener("dragleave", () => {
+    fileDropZone.style.borderColor = "#475569";
+});
+
+fileDropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    fileInput.files = e.dataTransfer.files;
+    handleFile();
+    fileDropZone.style.borderColor = "#475569";
+});
+
+// Deploy simulation
+deployBtn.addEventListener("click", () => {
+    deployForm.style.display = "none";
+    loadingScreen.style.display = "block";
+
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 10;
+        progressFill.style.width = progress + "%";
+        progressPercent.textContent = progress + "%";
+
+        if (progress >= 100) {
+            clearInterval(interval);
+            setTimeout(showResult, 500);
+        }
+    }, 400);
+});
+
+function showResult() {
+    loadingScreen.style.display = "none";
+    resultScreen.style.display = "block";
+
+    const url = `https://${subdomainInput.value}.storex.my.id`;
+    websiteUrl.value = url;
+    visitLink.href = url;
+
+    // Generate QR
+    document.getElementById("qrCode").innerHTML = "";
+    QRCode.toCanvas(document.getElementById("qrCode"), url, { width: 128 });
+}
+
+function copyUrl() {
+    websiteUrl.select();
+    document.execCommand("copy");
+    alert("URL copied!");
+}
+
+function resetForm() {
+    resultScreen.style.display = "none";
+    deployForm.style.display = "block";
+    subdomainInput.value = "";
+    removeFile();
+    progressFill.style.width = "0%";
+    progressPercent.textContent = "0%";
+    validateForm();
+}
+
+function shareWebsite() {
+    if (navigator.share) {
+        navigator.share({
+            title: "My Website",
+            url: websiteUrl.value
+        });
+    } else {
+        copyUrl();
+    }
+}
+  </script>
+
+</body>
+  </html>
+  
